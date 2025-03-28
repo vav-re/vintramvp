@@ -705,6 +705,7 @@ body::before {
     justify-content: center;
     align-items: center;
     transform: translateY(-50px); /* Move para cima no eixo Y */
+    transform: translateX(-30px);
 }
 
 #vintra-logo {
