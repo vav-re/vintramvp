@@ -698,12 +698,13 @@ body::before {
 }
 
 #logo-container {
-    width: 450px;
-    height: 450px;
+    width: 550px;
+    height: 550px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: translateY(-50px); /* Move para cima no eixo Y */
 }
 
 #vintra-logo {
