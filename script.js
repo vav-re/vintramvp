@@ -583,20 +583,21 @@ function animateLogo() {
         opacity: 0.2
     });
     
-    // Inicializar logo
-    gsap.set(logo, {
-        scale: 0.98,
-        opacity: 0.85
-    });
-    
-    // Sequência de animação
-    timeline
-        .to(logo, {
-            scale: 1,
-            opacity: 1,
-            duration: 1.5,
-            ease: "sine.inOut"
-        })
+   // Inicializar logo
+gsap.set(logo, {
+    scale: 0.98,
+    opacity: 0.85,
+    y: -50 // Adicione esta linha para começar mais acima
+});
+
+// Na sequência de animação
+timeline
+    .to(logo, {
+        scale: 1.2, // Aumente para um valor maior que 1
+        opacity: 1,
+        duration: 1.5,
+        ease: "sine.inOut"
+    })
         // Animar traçados dos caminhos
         .to(paths, {
             strokeDashoffset: 0,
