@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VINTRA | Análise Dimensional Clínica</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- GSAP for Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.3/gsap.min.js"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Splash Screen - Logo Animation -->
+    <div id="splashScreen">
+        <div id="logo-container">
+            <div class="background-glow"></div>
+            <svg id="vintra-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="2" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+              <g transform="translate(0,450) scale(0.05,-0.05)" fill="none">
+                <path class="logo-path" id="path1" d="M3300 5974 c0 -15 372 -666 385 -674 8 -6 76 103 151 240 75 138 161 293 192 345 l56 95 -392 0 c-216 0 -392 -3 -392 -6z"/>
+                <path class="logo-path" id="path2" d="M4027 5539 l-243 -440 279 -495 c153 -272 311 -559 352 -639 88 -170 85 -169 138 -60 23 47 290 530 594 1073 304 544 553 992 553 995 0 30 -277 3 -289 -28 -22 -59 -900 -1643 -911 -1644 -9 0 -169 290 -288 520 l-37 73 255 458 c140 252 277 496 304 543 l50 85 -257 0 -257 -1 -243 -440z"/>
+                <path class="logo-path" id="path3" d="M4668 5434 l-302 -544 62 -115 c34 -63 67 -115 72 -114 6 0 100 163 210 362 110 200 274 494 365 655 91 160 165 293 165 296 0 3 -61 6 -135 5 l-135 0 -302 -545z"/>
+                <path class="logo-path" id="path4" d="M2851 3190 c60 -127 109 -240 109 -252 0 -11 23 -18 51 -14 43 5 66 40 160 244 128 279 122 256 57 248 -45 -5 -62 -30 -123 -181 -88 -214 -80 -214 -173 5 -70 166 -80 180 -133 180 l-56 0 108 -230z"/>
+                <path class="logo-path" id="path5" d="M3480 3170 l0 -250 50 0 50 0 0 250 0 250 -50 0 -50 0 0 -250z"/>
+                <path class="logo-path" id="path6" d="M3840 3170 l0 -250 49 0 c48 0 50 4 55 169 l6 169 137 -169 c196 -243 213 -236 213 81 l0 250 -53 0 -53 0 12 -170 c15 -206 27 -206 -139 0 -204 253 -227 245 -227 -80z"/>
+                <path class="logo-path" id="path7" d="M4520 3380 c0 -34 13 -40 90 -40 l90 0 0 -210 0 -210 50 0 50 0 0 210 0 210 90 0 c77 0 90 6 90 40 0 38 -13 40 -230 40 -217 0 -230 -2 -230 -40z"/>
+                <path class="logo-path" id="path8" d="M5200 3170 l0 -250 50 0 c45 0 50 8 50 80 0 77 2 80 67 80 56 0 77 -14 123 -80 44 -63 68 -80 115 -80 l60 0 -72 87 -71 87 59 44 c164 121 44 282 -210 282 l-171 0 0 -250z m329 126 c50 -73 1 -125 -126 -132 l-103 -6 0 91 0 91 99 0 c79 0 105 -9 130 -44z"/>
+                <path class="logo-path" id="path9" d="M6031 3316 c-26 -58 -75 -168 -109 -243 -74 -164 -73 -153 -14 -153 35 0 54 16 69 60 20 58 25 60 150 60 124 0 129 -2 153 -60 18 -43 38 -60 72 -60 60 0 67 -29 -62 251 -136 296 -180 321 -259 145z m188 -201 c0 -8 -39 -15 -89 -15 -104 0 -105 2 -47 132 l44 98 45 -100 c25 -55 46 -107 47 -115z"/>
+              </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <div class="login-container">
+            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDUwLjAwMDAwMHB0IiBoZWlnaHQ9IjQ1MC4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDQ1MC4wMDAwMDAgNDUwLjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgo8bWV0YWRhdGE+CkNyZWF0ZWQgYnkgcG90cmFjZSAxLjEwLCB3cml0dGVuIGJ5IFBldGVyIFNlbGluZ2VyIDIwMDEtMjAxMQo8L21ldGFkYXRhPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0NTAuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIgpmaWxsPSIjMDAwMDAwIiBzdHJva2U9Im5vbmUiPgo8cGF0aCBkPSJNMjUwIDM4MjkgYzAgLTYgNDMgLTg4IDk2IC0xODMgODUgLTE1MCA0MTkgLTc0NyA1MDAgLTg5MyAxNiAtMjkgMzMKLTUxIDM3IC01MCA1IDEgNDQgNjUgODYgMTQyIDM2NSA2NTUgNTQxIDk3NiA1NDEgOTg1IDAgNyAtMjA0IDEwIC02MzAgMTAKLTQ1NiAwIC02MzAgLTMgLTYzMCAtMTF6Ii8+CjxwYXRoIGQ9Ik0xODMyIDM4MjggYy01IC03IC03NCAtMTMwIC0xNTIgLTI3MyAtNzkgLTE0MyAtMjA5IC0zNzkgLTI5MCAtNTI1Ci0yNzcgLTUwMCAtMzQzIC02MjIgLTM0MyAtNjM0IDAgLTYgOTIgLTE3MyAyMDMgLTM3MSAxMTEgLTE5OCAyOTkgLTUzMyA0MTcKLTc0NSAxMTkgLTIxMiAyNTkgLTQ2NCAzMTMgLTU2MCA1NCAtOTYgMTI2IC0yMjggMTYxIC0yOTIgMzUgLTY1IDY3IC0xMTcgNzEKLTExOCA4IDAgMTMgOSAzOTYgNjk1IDQ0NyA4MDIgNTYxIDEwMDUgNjg3IDEyMzAgNjUgMTE2IDI0MCA0MzEgMzkwIDcwMCAxNTAKMjcwIDMyMyA1ODAgMzg0IDY5MCA2MSAxMDkgMTExIDIwMyAxMTEgMjA3IDAgNCAtOTYgOCAtMjE0IDggbC0yMTUgMCAtNjkKLTEyMiBjLTM4IC02OCAtMjI3IC00MDYgLTQxOSAtNzUzIC02MTUgLTExMDYgLTY5MiAtMTI0NCAtODY1IC0xNTUyIC05MyAtMTY3Ci0xNzQgLTMwNSAtMTc4IC0zMDggLTUgLTMgLTE2IDUgLTI0IDE3IC0zNCA1MyAtNTE2IDkyMSAtNTE2IDkyOSAwIDggNzUwCjEzNjIgOTEwIDE2NDIgMzggNjggNzAgMTI5IDcwIDEzNSAwIDE4IC04MTMgMTcgLTgyOCAweiIvPgo8cGF0aCBkPSJNMjk3MiAzODA4IGMtMTEgLTE4IC0xMDIgLTE4MSAtMjAyIC0zNjMgLTEwMCAtMTgxIC0yMjQgLTQwNCAtMjc1Ci00OTUgLTQ2MCAtODI0IC00OTUgLTg4NyAtNDk1IC05MDAgMCAtMjAgMjEzIC0zOTEgMjIwIC0zODMgNCA0IDExMyAxOTkgMjQyCjQzMyAyMjIgNDAwIDMzMCA1OTUgNzc1IDEzOTQgMTAxIDE4MiAxODMgMzMzIDE4MyAzMzggMCA0IC05NiA4IC0yMTQgOCBsLTIxNAowIC0yMCAtMzJ6Ii8+CjwvZz4KPC9zdmc+Cg==" alt="VINTRA Logo" class="logo">
+            <h1 class="login-heading">VINTRA</h1>
+            <p class="login-subheading">Análise Dimensional Clínica</p>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha de Acesso</label>
+                    <input type="password" id="password" class="form-input" placeholder="Digite sua senha de acesso">
+                    <div class="error-message" id="passwordError">Senha incorreta. Por favor, tente novamente.</div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="appContainer">
+        <!-- App Header -->
+        <header class="app-header">
+            <button id="mobileMenuBtn" class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div id="mobileMenu" class="mobile-menu">
+                <div class="mobile-menu-header">
+                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDUwLjAwMDAwMHB0IiBoZWlnaHQ9IjQ1MC4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDQ1MC4wMDAwMDAgNDUwLjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgo8bWV0YWRhdGE+CkNyZWF0ZWQgYnkgcG90cmFjZSAxLjEwLCB3cml0dGVuIGJ5IFBldGVyIFNlbGluZ2VyIDIwMDEtMjAxMQo8L21ldGFkYXRhPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0NTAuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIgpmaWxsPSIjMDAwMDAwIiBzdHJva2U9Im5vbmUiPgo8cGF0aCBkPSJNMjUwIDM4MjkgYzAgLTYgNDMgLTg4IDk2IC0xODMgODUgLTE1MCA0MTkgLTc0NyA1MDAgLTg5MyAxNiAtMjkgMzMKLTUxIDM3IC01MCA1IDEgNDQgNjUgODYgMTQyIDM2NSA2NTUgNTQxIDk3NiA1NDEgOTg1IDAgNyAtMjA0IDEwIC02MzAgMTAKLTQ1NiAwIC02MzAgLTMgLTYzMCAtMTF6Ii8+CjxwYXRoIGQ9Ik0xODMyIDM4MjggYy01IC03IC03NCAtMTMwIC0xNTIgLTI3MyAtNzkgLTE0MyAtMjA5IC0zNzkgLTI5MCAtNTI1Ci0yNzcgLTUwMCAtMzQzIC02MjIgLTM0MyAtNjM0IDAgLTYgOTIgLTE3MyAyMDMgLTM3MSAxMTEgLTE5OCAyOTkgLTUzMyA0MTcKLTc0NSAxMTkgLTIxMiAyNTkgLTQ2NCAzMTMgLTU2MCA1NCAtOTYgMTI2IC0yMjggMTYxIC0yOTIgMzUgLTY1IDY3IC0xMTcgNzEKLTExOCA4IDAgMTMgOSAzOTYgNjk1IDQ0NyA4MDIgNTYxIDEwMDUgNjg3IDEyMzAgNjUgMTE2IDI0MCA0MzEgMzkwIDcwMCAxNTAKMjcwIDMyMyA1ODAgMzg0IDY5MCA2MSAxMDkgMTExIDIwMyAxMTEgMjA3IDAgNCAtOTYgOCAtMjE0IDggbC0yMTUgMCAtNjkKLTEyMiBjLTM4IC02OCAtMjI3IC00MDYgLTQxOSAtNzUzIC02MTUgLTExMDYgLTY5MiAtMTI0NCAtODY1IC0xNTUyIC05MyAtMTY3Ci0xNzQgLTMwNSAtMTc4IC0zMDggLTUgLTMgLTE2IDUgLTI0IDE3IC0zNCA1MyAtNTE2IDkyMSAtNTE2IDkyOSAwIDggNzUwCjEzNjIgOTEwIDE2NDIgMzggNjggNzAgMTI5IDcwIDEzNSAwIDE4IC04MTMgMTcgLTgyOCAweiIvPgo8cGF0aCBkPSJNMjk3MiAzODA4IGMtMTEgLTE4IC0xMDIgLTE4MSAtMjAyIC0zNjMgLTEwMCAtMTgxIC0yMjQgLTQwNCAtMjc1Ci00OTUgLTQ2MCAtODI0IC00OTUgLTg4NyAtNDk1IC05MDAgMCAtMjAgMjEzIC0zOTEgMjIwIC0zODMgNCA0IDExMyAxOTkgMjQyCjQzMyAyMjIgNDAwIDMzMCA1OTUgNzc1IDEzOTQgMTAxIDE4MiAxODMgMzMzIDE4MyAzMzggMCA0IC05NiA4IC0yMTQgOCBsLTIxNAowIC0yMCAtMzJ6Ii8+CjwvZz4KPC9zdmc+Cg==" alt="VINTRA Logo" class="mobile-logo">
+                    <button class="mobile-menu-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="mobile-menu-content">
+                    <a href="#dashboard" class="mobile-menu-item active" data-target="dashboard">
+                        <i class="fas fa-home"></i>
+                        Dashboard
+                    </a>
+                    <a href="#novo" class="mobile-menu-item" data-target="new">
+                        <i class="fas fa-plus"></i>
+                        Novo
+                    </a>
+                    <a href="#biblioteca" class="mobile-menu-item" data-target="library">
+                        <i class="fas fa-folder"></i>
+                        Biblioteca
+                    </a>
+                </div>
+                <div class="mobile-menu-footer">
+                    <a href="#perfil" class="mobile-menu-item">
+                        <i class="fas fa-user"></i>
+                        Meu Perfil
+                    </a>
+                    <a href="#sair" class="mobile-menu-item" id="mobileLogoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sair
+                    </a>
+                </div>
+            </div>
+            <div id="mobileMenuBackdrop" class="mobile-menu-backdrop"></div>
+            
+            <div class="app-logo">
+                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDUwLjAwMDAwMHB0IiBoZWlnaHQ9IjQ1MC4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDQ1MC4wMDAwMDAgNDUwLjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgo8bWV0YWRhdGE+CkNyZWF0ZWQgYnkgcG90cmFjZSAxLjEwLCB3cml0dGVuIGJ5IFBldGVyIFNlbGluZ2VyIDIwMDEtMjAxMQo8L21ldGFkYXRhPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0NTAuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIgpmaWxsPSIjMDAwMDAwIiBzdHJva2U9Im5vbmUiPgo8cGF0aCBkPSJNMjUwIDM4MjkgYzAgLTYgNDMgLTg4IDk2IC0xODMgODUgLTE1MCA0MTkgLTc0NyA1MDAgLTg5MyAxNiAtMjkgMzMKLTUxIDM3IC01MCA1IDEgNDQgNjUgODYgMTQyIDM2NSA2NTUgNTQxIDk3NiA1NDEgOTg1IDAgNyAtMjA0IDEwIC02MzAgMTAKLTQ1NiAwIC02MzAgLTMgLTYzMCAtMTF6Ii8+CjxwYXRoIGQ9Ik0xODMyIDM4MjggYy01IC03IC03NCAtMTMwIC0xNTIgLTI3MyAtNzkgLTE0MyAtMjA5IC0zNzkgLTI5MCAtNTI1Ci0yNzcgLTUwMCAtMzQzIC02MjIgLTM0MyAtNjM0IDAgLTYgOTIgLTE3MyAyMDMgLTM3MSAxMTEgLTE5OCAyOTkgLTUzMyA0MTcKLTc0NSAxMTkgLTIxMiAyNTkgLTQ2NCAzMTMgLTU2MCA1NCAtOTYgMTI2IC0yMjggMTYxIC0yOTIgMzUgLTY1IDY3IC0xMTcgNzEKLTExOCA4IDAgMTMgOSAzOTYgNjk1IDQ0NyA4MDIgNTYxIDEwMDUgNjg3IDEyMzAgNjUgMTE2IDI0MCA0MzEgMzkwIDcwMCAxNTAKMjcwIDMyMyA1ODAgMzg0IDY5MCA2MSAxMDkgMTExIDIwMyAxMTEgMjA3IDAgNCAtOTYgOCAtMjE0IDggbC0yMTUgMCAtNjkKLTEyMiBjLTM4IC02OCAtMjI3IC00MDYgLTQxOSAtNzUzIC02MTUgLTExMDYgLTY5MiAtMTI0NCAtODY1IC0xNTUyIC05MyAtMTY3Ci0xNzQgLTMwNSAtMTc4IC0zMDggLTUgLTMgLTE2IDUgLTI0IDE3IC0zNCA1MyAtNTE2IDkyMSAtNTE2IDkyOSAwIDggNzUwCjEzNjIgOTEwIDE2NDIgMzggNjggNzAgMTI5IDcwIDEzNSAwIDE4IC04MTMgMTcgLTgyOCAweiIvPgo8cGF0aCBkPSJNMjk3MiAzODA4IGMtMTEgLTE4IC0xMDIgLTE4MSAtMjAyIC0zNjMgLTEwMCAtMTgxIC0yMjQgLTQwNCAtMjc1Ci00OTUgLTQ2MCAtODI0IC00OTUgLTg4NyAtNDk1IC05MDAgMCAtMjAgMjEzIC0zOTEgMjIwIC0zODMgNCA0IDExMyAxOTkgMjQyCjQzMyAyMjIgNDAwIDMzMCA1OTUgNzc1IDEzOTQgMTAxIDE4MiAxODMgMzMzIDE4MyAzMzggMCA0IC05NiA4IC0yMTQgOCBsLTIxNAowIC0yMCAtMzJ6Ii8+CjwvZz4KPC9zdmc+Cg==" alt="VINTRA Logo">
+                <h1 class="app-title">VINTRA</h1>
+            </div>
+            <nav class="app-nav">
+                <a href="#dashboard" class="nav-item active" data-target="dashboard">Dashboard</a>
+                <a href="#biblioteca" class="nav-item" data-target="library">Biblioteca</a>
+            </nav>
+            <div class="user-menu">
+                <div class="user-avatar">D</div>
+                <div class="user-dropdown">
+                    <a href="#perfil" class="user-dropdown-item">
+                        <i class="fas fa-user"></i>
+                        Meu Perfil
+                    </a>
+                    <a href="#preferencias" class="user-dropdown-item">
+                        <i class="fas fa-cog"></i>
+                        Preferências
+                    </a>
+                    <div class="user-dropdown-divider"></div>
+                    <a href="#sair" class="user-dropdown-item" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sair
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- App Main -->
+        <main class="app-main">
+            <!-- Sidebar -->
+            <div class="app-sidebar">
+                <div class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="sidebar-menu">
+                    <a href="#dashboard" class="sidebar-link active" data-target="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#novo" class="sidebar-link" data-target="new">
+                        <i class="fas fa-plus"></i>
+                        <span>Novo</span>
+                    </a>
+                    <a href="#biblioteca" class="sidebar-link" data-target="library">
+                        <i class="fas fa-folder"></i>
+                        <span>Biblioteca</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div class="dashboard" id="dashboard-view">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Dashboard</h1>
+                    <p class="dashboard-subtitle">Bem-vindo ao VINTRA! Veja seus documentos recentes.</p>
+                </div>
+
+                <div class="welcome-message glow-effect">
+                    <div class="welcome-text">
+                        <h2>Olá, Dr. Santos!</h2>
+                        <p>Crie uma nova gravação ou faça upload de um arquivo para começar a usar o VINTRA.</p>
+                        <button class="btn btn-primary" onclick="switchView('new')">
+                            <i class="fas fa-plus btn-icon"></i>
+                            Novo Documento
+                        </button>
+                    </div>
+                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iNDUwLjAwMDAwMHB0IiBoZWlnaHQ9IjQ1MC4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDQ1MC4wMDAwMDAgNDUwLjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgo8bWV0YWRhdGE+CkNyZWF0ZWQgYnkgcG90cmFjZSAxLjEwLCB3cml0dGVuIGJ5IFBldGVyIFNlbGluZ2VyIDIwMDEtMjAxMQo8L21ldGFkYXRhPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw0NTAuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIgpmaWxsPSIjMDAwMDAwIiBzdHJva2U9Im5vbmUiPgo8cGF0aCBkPSJNMjUwIDM4MjkgYzAgLTYgNDMgLTg4IDk2IC0xODMgODUgLTE1MCA0MTkgLTc0NyA1MDAgLTg5MyAxNiAtMjkgMzMKLTUxIDM3IC01MCA1IDEgNDQgNjUgODYgMTQyIDM2NSA2NTUgNTQxIDk3NiA1NDEgOTg1IDAgNyAtMjA0IDEwIC02MzAgMTAKLTQ1NiAwIC02MzAgLTMgLTYzMCAtMTF6Ii8+CjxwYXRoIGQ9Ik0xODMyIDM4MjggYy01IC03IC03NCAtMTMwIC0xNTIgLTI3MyAtNzkgLTE0MyAtMjA5IC0zNzkgLTI5MCAtNTI1Ci0yNzcgLTUwMCAtMzQzIC02MjIgLTM0MyAtNjM0IDAgLTYgOTIgLTE3MyAyMDMgLTM3MSAxMTEgLTE5OCAyOTkgLTUzMyA0MTcKLTc0NSAxMTkgLTIxMiAyNTkgLTQ2NCAzMTMgLTU2MCA1NCAtOTYgMTI2IC0yMjggMTYxIC0yOTIgMzUgLTY1IDY3IC0xMTcgNzEKLTExOCA4IDAgMTMgOSAzOTYgNjk1IDQ0NyA4MDIgNTYxIDEwMDUgNjg3IDEyMzAgNjUgMTE2IDI0MCA0MzEgMzkwIDcwMCAxNTAKMjcwIDMyMyA1ODAgMzg0IDY5MCA2MSAxMDkgMTExIDIwMyAxMTEgMjA3IDAgNCAtOTYgOCAtMjE0IDggbC0yMTUgMCAtNjkKLTEyMiBjLTM4IC02OCAtMjI3IC00MDYgLTQxOSAtNzUzIC02MTUgLTExMDYgLTY5MiAtMTI0NCAtODY1IC0xNTUyIC05MyAtMTY3Ci0xNzQgLTMwNSAtMTc4IC0zMDggLTUgLTMgLTE2IDUgLTI0IDE3IC0zNCA1MyAtNTE2IDkyMSAtNTE2IDkyOSAwIDggNzUwCjEzNjIgOTEwIDE2NDIgMzggNjggNzAgMTI5IDcwIDEzNSAwIDE4IC04MTMgMTcgLTgyOCAweiIvPgo8cGF0aCBkPSJNMjk3MiAzODA4IGMtMTEgLTE4IC0xMDIgLTE4MSAtMjAyIC0zNjMgLTEwMCAtMTgxIC0yMjQgLTQwNCAtMjc1Ci00OTUgLTQ2MCAtODI0IC00OTUgLTg4NyAtNDk1IC05MDAgMCAtMjAgMjEzIC0zOTEgMjIwIC0zODMgNCA0IDExMyAxOTkgMjQyCjQzMyAyMjIgNDAwIDMzMCA1OTUgNzc1IDEzOTQgMTAxIDE4MiAxODMgMzMzIDE4MyAzMzggMCA0IC05NiA4IC0yMTQgOCBsLTIxNAowIC0yMCAtMzJ6Ii8+CjwvZz4KPC9zdmc+Cg==" alt="VINTRA Logo" style="height: 100px; width: auto;">
+                </div>
+
+                <div class="section-header">
+                    <h2 class="section-title">Documentos Recentes</h2>
+                    <a href="#todos-documentos" class="nav-item" onclick="switchView('library')">Ver Todos</a>
+                </div>
+
+                <div class="recent-items" id="recentDocuments">
+                    <!-- Documentos recentes serão inseridos aqui via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Document Library View -->
+            <div class="workspace" id="library-view" style="display: none;">
+                <div class="document-library">
+                    <div class="library-header">
+                        <h3 class="library-title">Minha Biblioteca</h3>
+                        <div class="library-actions">
+                            <button class="library-btn" onclick="switchView('new')">
+                                <i class="fas fa-plus"></i>
+                                Novo
+                            </button>
+                        </div>
+                        <div class="library-search">
+                            <input type="text" class="library-search-input" placeholder="Buscar documentos...">
+                            <i class="fas fa-search library-search-icon"></i>
+                        </div>
+                        <div class="library-filters">
+                            <button class="library-filter active" data-filter="all">Todos</button>
+                            <button class="library-filter" data-filter="audio">Áudios</button>
+                            <button class="library-filter" data-filter="transcription">Transcrições</button>
+                            <button class="library-filter" data-filter="vintra">VINTRA</button>
+                            <button class="library-filter" data-filter="soap">SOAP</button>
+                            <button class="library-filter" data-filter="narrative">Narrativa</button>
+                            <button class="library-filter" data-filter="ipissima">Ipíssima</button>
+                            <button class="library-filter" data-filter="orientacoes">Orientações</button>
+                        </div>
+                    </div>
+                    <div class="library-content" id="documentList">
+                        <!-- Documentos da biblioteca serão inseridos aqui via JavaScript -->
+                    </div>
+                </div>
+                <div class="document-workspace">
+                    <div id="documentView" style="display: flex; flex-direction: column; height: 100%;">
+                        <!-- Visualização do documento ativo será inserido aqui via JavaScript -->
+                        <div class="document-empty">
+                            <div class="document-empty-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h2 class="document-empty-title">Nenhum documento selecionado</h2>
+                            <p class="document-empty-text">Selecione um documento da biblioteca para visualizá-lo ou crie um novo.</p>
+                            <button class="btn btn-primary" onclick="switchView('new')">
+                                <i class="fas fa-plus btn-icon"></i>
+                                Novo Documento
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Document View -->
+            <div class="workspace" id="new-view" style="display: none;">
+                <div class="document-workspace" style="width: 100%;">
+                    <div class="document-toolbar">
+                        <div class="document-info-header">
+                            <div class="document-info-icon">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="document-info-details">
+                                <h2>Novo Documento</h2>
+                                <div class="document-info-meta">
+                                    <span>Selecione uma opção para começar</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-toolbar-actions">
+                            <div class="library-filters">
+                                <button class="library-filter active" data-new-tab="record">Gravar</button>
+                                <button class="library-filter" data-new-tab="upload">Upload</button>
+                                <button class="library-filter" data-new-tab="transcribe">Transcrição</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Focus Mode Button -->
+                    <button class="focus-mode-btn" id="focusModeToggle" title="Alternar Modo Foco">
+                        <i class="fas fa-expand-alt"></i>
+                    </button>
+                    <div class="document-content">
+                        <div id="newDocumentContent">
+                            <!-- Tab 1: Gravação -->
+                            <div class="recording-module glow-effect" id="record-tab">
+                                <div class="recording-header">
+                                    <h2 class="recording-title">Gravação de Áudio</h2>
+                                    <p class="recording-subtitle">Grave uma sessão para transcrição automática</p>
+                                </div>
+                                <div class="recording-controls">
+                                    <button class="recording-btn recording-btn-start" id="startRecordingBtn">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    <button class="recording-btn recording-btn-stop hidden" id="stopRecordingBtn">
+                                        <i class="fas fa-stop"></i>
+                                    </button>
+                                    <button class="recording-btn recording-btn-pause hidden" id="pauseRecordingBtn">
+                                        <i class="fas fa-pause"></i>
+                                    </button>
+                                </div>
+                                <div class="recording-timer">
+                                    <div class="recording-time" id="recordingTime">00:00:00</div>
+                                    <div class="recording-status" id="recordingStatus">Pronto para gravar</div>
+                                </div>
+                                <div class="recording-visualizer">
+                                    <div class="visualizer-bars" id="visualizerBars">
+                                        <!-- Bars will be added dynamically -->
+                                    </div>
+                                </div>
+                                <div class="diarization-option">
+                                    <input type="checkbox" id="diarizationCheckbox" class="diarization-checkbox" checked>
+                                    <label for="diarizationCheckbox" class="diarization-label">Habilitar Diarização (Identificação de Falantes)</label>
+                                </div>
+                                <div class="progress-container" id="recordingProgress" style="display: none;">
+                                    <div class="progress-header">
+                                        <div class="progress-title">Processando gravação</div>
+                                        <div class="progress-percentage" id="recordingProgressPercentage">0%</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="recordingProgressBar" style="width: 0%"></div>
+                                    </div>
+                                    <div class="progress-status" id="recordingProgressStatus">Iniciando processamento...</div>
+                                </div>
+                                <div class="upload-preview" id="recordingPreview">
+                                    <div class="upload-preview-icon">
+                                        <i class="fas fa-file-audio"></i>
+                                    </div>
+                                    <div class="upload-preview-info">
+                                        <div class="upload-preview-name" id="recordingFileName">Gravação_25032025.mp3</div>
+                                        <div class="upload-preview-meta" id="recordingFileMeta">15.3 MB • 28:45</div>
+                                    </div>
+                                    <button class="upload-preview-remove" id="recordingRemoveBtn">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div style="display: flex; justify-content: center;">
+                                    <button class="btn btn-primary" id="processRecordingBtn">
+                                        <i class="fas fa-play btn-icon"></i>
+                                        Iniciar Transcrição
+                                    </button>
+                                </div>
+                                
+                                <!-- Transcription Steps -->
+                                <div class="transcription-steps" id="transcriptionSteps" style="display: none;">
+                                    <div class="transcription-steps-line"></div>
+                                    <div class="transcription-steps-progress" id="transcriptionStepsProgress"></div>
+                                    <ul class="transcription-steps-list">
+                                        <li class="transcription-step" data-step="1">
+                                            <div class="transcription-step-circle">1</div>
+                                            <div class="transcription-step-label">Processando Áudio</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="2">
+                                            <div class="transcription-step-circle">2</div>
+                                            <div class="transcription-step-label">Transcrição</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="3">
+                                            <div class="transcription-step-circle">3</div>
+                                            <div class="transcription-step-label">Diarização</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="4">
+                                            <div class="transcription-step-circle">4</div>
+                                            <div class="transcription-step-label">Finalização</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Live Transcription Preview -->
+                                <div class="live-transcription-preview" id="liveTranscriptionPreview">
+                                    <p><strong>Médico:</strong> Bom dia, como está se sentindo hoje?</p>
+                                    <p><strong>Paciente:</strong> Não muito bem, doutor. Ainda tenho aquelas dores que mencionei na última consulta.</p>
+                                    <p><strong>Médico:</strong> Entendo. Vamos falar mais sobre isso. Onde você sente mais dor?</p>
+                                    <p><span class="typing"></span></p>
+                                </div>
+                                
+                                <!-- Transcription Completed Panel -->
+                                <div class="transcription-completed-panel" id="transcriptionCompletedPanel">
+                                    <div class="transcription-completed-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h3 class="transcription-completed-title">Transcrição Concluída com Sucesso</h3>
+                                    <p class="transcription-completed-text">
+                                        Seu áudio foi transcrito e está disponível na biblioteca. Você pode visualizá-lo agora ou processá-lo para gerar outros formatos.
+                                    </p>
+                                    <div class="transcription-completed-actions">
+                                        <button class="btn btn-secondary" onclick="viewTranscription()">
+                                            <i class="fas fa-file-alt btn-icon"></i>
+                                            Ver Transcrição
+                                        </button>
+                                        <button class="btn btn-primary" onclick="processTranscription()">
+                                            <i class="fas fa-cogs btn-icon"></i>
+                                            Processar Documento
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab 2: Upload -->
+                            <div class="upload-module glow-effect" id="upload-tab" style="display: none;">
+                                <div class="upload-header">
+                                    <h2 class="upload-title">Upload de Arquivo</h2>
+                                    <p class="upload-subtitle">Carregue um arquivo de áudio ou documento de texto</p>
+                                </div>
+                                <div class="upload-area" id="uploadArea">
+                                    <input type="file" id="uploadInput" class="upload-input" accept="audio/*,.txt,.md,.doc,.docx">
+                                    <div class="upload-icon">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <div class="upload-message">Arraste arquivos aqui ou clique para selecionar</div>
+                                    <div class="upload-hint">Suporta arquivos de áudio (MP3, WAV, M4A) e documentos (TXT, DOC, DOCX)</div>
+                                </div>
+                                <div class="diarization-option">
+                                    <input type="checkbox" id="uploadDiarizationCheckbox" class="diarization-checkbox" checked>
+                                    <label for="uploadDiarizationCheckbox" class="diarization-label">Habilitar Diarização para áudios (Identificação de Falantes)</label>
+                                </div>
+                                <div class="upload-preview" id="uploadPreview">
+                                    <div class="upload-preview-icon">
+                                        <i class="fas fa-file"></i>
+                                    </div>
+                                    <div class="upload-preview-info">
+                                        <div class="upload-preview-name" id="uploadFileName">arquivo.mp3</div>
+                                        <div class="upload-preview-meta" id="uploadFileMeta">15.3 MB</div>
+                                    </div>
+                                    <button class="upload-preview-remove" id="uploadRemoveBtn">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="progress-container" id="uploadProgress" style="display: none;">
+                                    <div class="progress-header">
+                                        <div class="progress-title">Processando upload</div>
+                                        <div class="progress-percentage" id="uploadProgressPercentage">0%</div>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" id="uploadProgressBar" style="width: 0%"></div>
+                                    </div>
+                                    <div class="progress-status" id="uploadProgressStatus">Iniciando upload...</div>
+                                </div>
+                                <div style="display: flex; justify-content: center;">
+                                    <button class="btn btn-primary" id="processUploadBtn">
+                                        <i class="fas fa-upload btn-icon"></i>
+                                        Processar Arquivo
+                                    </button>
+                                </div>
+                                
+                                <!-- Transcription Steps for Upload -->
+                                <div class="transcription-steps" id="uploadTranscriptionSteps" style="display: none;">
+                                    <div class="transcription-steps-line"></div>
+                                    <div class="transcription-steps-progress" id="uploadTranscriptionStepsProgress"></div>
+                                    <ul class="transcription-steps-list">
+                                        <li class="transcription-step" data-step="1">
+                                            <div class="transcription-step-circle">1</div>
+                                            <div class="transcription-step-label">Upload</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="2">
+                                            <div class="transcription-step-circle">2</div>
+                                            <div class="transcription-step-label">Processamento</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="3">
+                                            <div class="transcription-step-circle">3</div>
+                                            <div class="transcription-step-label">Transcrição</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="4">
+                                            <div class="transcription-step-circle">4</div>
+                                            <div class="transcription-step-label">Finalização</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Upload Completed Panel -->
+                                <div class="transcription-completed-panel" id="uploadCompletedPanel">
+                                    <div class="transcription-completed-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h3 class="transcription-completed-title">Processamento Concluído</h3>
+                                    <p class="transcription-completed-text">
+                                        Seu arquivo foi processado com sucesso e está disponível na biblioteca.
+                                    </p>
+                                    <div class="transcription-completed-actions">
+                                        <button class="btn btn-secondary" onclick="viewTranscription()">
+                                            <i class="fas fa-file-alt btn-icon"></i>
+                                            Ver Documento
+                                        </button>
+                                        <button class="btn btn-primary" onclick="processTranscription()">
+                                            <i class="fas fa-cogs btn-icon"></i>
+                                            Processar Documento
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab 3: Transcrição Manual -->
+                            <div class="upload-module glow-effect" id="transcribe-tab" style="display: none;">
+                                <div class="upload-header">
+                                    <h2 class="upload-title">Transcrição Manual</h2>
+                                    <p class="upload-subtitle">Digite ou cole a transcrição da consulta</p>
+                                </div>
+                                <textarea class="document-edit" id="transcriptionText" placeholder="Digite ou cole o texto da transcrição aqui..."></textarea>
+                                <div style="display: flex; justify-content: center; margin-top: 1.5rem;">
+                                    <button class="btn btn-primary" id="processTranscriptionBtn">
+                                        <i class="fas fa-save btn-icon"></i>
+                                        Salvar Transcrição
+                                    </button>
+                                </div>
+                                
+                                <!-- Manual Transcription Processing Steps -->
+                                <div class="transcription-steps" id="manualTranscriptionSteps" style="display: none;">
+                                    <div class="transcription-steps-line"></div>
+                                    <div class="transcription-steps-progress" id="manualTranscriptionStepsProgress"></div>
+                                    <ul class="transcription-steps-list">
+                                        <li class="transcription-step" data-step="1">
+                                            <div class="transcription-step-circle">1</div>
+                                            <div class="transcription-step-label">Validação</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="2">
+                                            <div class="transcription-step-circle">2</div>
+                                            <div class="transcription-step-label">Processamento</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="3">
+                                            <div class="transcription-step-circle">3</div>
+                                            <div class="transcription-step-label">Análise</div>
+                                        </li>
+                                        <li class="transcription-step" data-step="4">
+                                            <div class="transcription-step-circle">4</div>
+                                            <div class="transcription-step-label">Finalização</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <!-- Completed Panel for Manual Transcription -->
+                                <div class="transcription-completed-panel" id="manualTranscriptionCompletedPanel">
+                                    <div class="transcription-completed-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h3 class="transcription-completed-title">Transcrição Salva</h3>
+                                    <p class="transcription-completed-text">
+                                        Sua transcrição foi salva com sucesso e está disponível na biblioteca.
+                                    </p>
+                                    <div class="transcription-completed-actions">
+                                        <button class="btn btn-secondary" onclick="viewTranscription()">
+                                            <i class="fas fa-file-alt btn-icon"></i>
+                                            Ver Transcrição
+                                        </button>
+                                        <button class="btn btn-primary" onclick="processTranscription()">
+                                            <i class="fas fa-cogs btn-icon"></i>
+                                            Processar Documento
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing View -->
+            <div class="workspace" id="processing-view" style="display: none;">
+                <div class="document-workspace" style="width: 100%;">
+                    <div class="document-toolbar">
+                        <div class="document-info-header">
+                            <div class="document-info-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="document-info-details">
+                                <h2>Processar Documento</h2>
+                                <div class="document-info-meta">
+                                    <span id="processingDocumentTitle">Transcrição.txt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Focus Mode Button -->
+                    <button class="focus-mode-btn" id="focusModeToggleProcessing" title="Alternar Modo Foco">
+                        <i class="fas fa-expand-alt"></i>
+                    </button>
+                    <div class="document-content">
+                        <div class="upload-module glow-effect">
+                            <div class="upload-header">
+                                <h2 class="upload-title">Processamento VINTRA</h2>
+                                <p class="upload-subtitle">Selecione os formatos que deseja gerar</p>
+                            </div>
+                            
+                            <div class="document-format-options">
+                                <div class="document-format-option active" data-format="vintra">VINTRA</div>
+                                <div class="document-format-option" data-format="soap">SOAP</div>
+                                <div class="document-format-option" data-format="ipissima">Ipíssima Narrativa</div>
+                                <div class="document-format-option" data-format="narrative">Análise Narrativa</div>
+                                <div class="document-format-option" data-format="orientacoes">Orientações</div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: center; margin-top: 1.5rem;">
+                                <button class="btn btn-primary" id="startProcessingBtn">
+                                    <i class="fas fa-cogs btn-icon"></i>
+                                    Iniciar Processamento
+                                </button>
+                            </div>
+                            
+                            <!-- Processing Progress -->
+                            <div class="progress-container" id="processingProgress" style="display: none;">
+                                <div class="progress-header">
+                                    <div class="progress-title">Processando documento</div>
+                                    <div class="progress-percentage" id="processingProgressPercentage">0%</div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="processingProgressBar" style="width: 0%"></div>
+                                </div>
+                                <div class="progress-status" id="processingProgressStatus">Iniciando processamento...</div>
+                            </div>
+                            
+                            <!-- Processing Completed Panel -->
+                            <div class="transcription-completed-panel" id="processingCompletedPanel">
+                                <div class="transcription-completed-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h3 class="transcription-completed-title">Processamento Concluído</h3>
+                                <p class="transcription-completed-text">
+                                    Os documentos foram gerados com sucesso e estão disponíveis na biblioteca.
+                                </p>
+                                <div class="transcription-completed-actions">
+                                    <button class="btn btn-secondary" onclick="switchView('library')">
+                                        <i class="fas fa-folder-open btn-icon"></i>
+                                        Ver na Biblioteca
+                                    </button>
+                                    <button class="btn btn-primary" id="viewResultsBtn">
+                                        <i class="fas fa-file-alt btn-icon"></i>
+                                        Ver Resultados
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results View -->
+            <div class="workspace" id="results-view" style="display: none;">
+                <div class="document-workspace" style="width: 100%;">
+                    <div class="document-toolbar">
+                        <div class="document-info-header">
+                            <div class="document-info-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="document-info-details">
+                                <h2>Resultados do Processamento</h2>
+                                <div class="document-info-meta">
+                                    <span id="resultsDocumentTitle">Transcrição.txt</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-toolbar-actions">
+                            <button class="toolbar-btn" onclick="switchView('library')">
+                                <i class="fas fa-folder-open"></i>
+                                Biblioteca
+                            </button>
+                            <button class="toolbar-btn primary" id="downloadResultsBtn">
+                                <i class="fas fa-download"></i>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="document-tabs">
+                        <button class="document-tab active" data-panel="transcription-panel">Transcrição</button>
+                        <button class="document-tab" data-panel="vintra-panel">VINTRA</button>
+                        <button class="document-tab" data-panel="soap-panel">SOAP</button>
+                        <button class="document-tab" data-panel="ipissima-panel">Ipíssima</button>
+                        <button class="document-tab" data-panel="narrative-panel">Análise Narrativa</button>
+                        <button class="document-tab" data-panel="orientacoes-panel">Orientações</button>
+                    </div>
+                    
+                    <div class="document-tab-panels">
+                        <div class="document-tab-panel active" id="transcription-panel">
+                            <div class="document-content">
+                                <div class="document-container">
+                                    <div class="document-view" id="transcriptionContent">
+                                        <!-- Conteúdo da transcrição será inserido via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-tab-panel" id="vintra-panel">
+                            <div class="document-content">
+                                <div class="document-container">
+                                    <div class="document-view" id="vintraContent">
+                                        <!-- Conteúdo VINTRA será inserido via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-tab-panel" id="soap-panel">
+                            <div class="document-content">
+                                <div class="document-container">
+                                    <div class="document-view" id="soapContent">
+                                        <!-- Conteúdo SOAP será inserido via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-tab-panel" id="ipissima-panel">
+                            <div class="document-content">
+                                <div class="document-container">
+                                    <div class="document-view" id="ipissimaContent">
+                                        <!-- Conteúdo Ipíssima será inserido via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-tab-panel" id="narrative-panel">
+                            <div class="document-content">
+                                <div class="document-container">
+                                    <div class="document-view" id="narrativeContent">
+                                        <!-- Conteúdo Análise Narrativa será inserido via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="document-tab-panel" id="orientacoes-panel">
+                            <div class="document-content">
+                                <div class="document-container">
+                                    <div class="document-view" id="orientacoesContent">
+                                        <!-- Conteúdo Orientações será inserido via JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer">
+        <!-- Toasts will be added dynamically -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Título do Modal</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be added dynamically -->
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <button class="btn btn-secondary" id="modalCancelBtn">Cancelar</button>
+                <button class="btn btn-primary" id="modalConfirmBtn">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
