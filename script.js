@@ -588,6 +588,7 @@ gsap.set(logo, {
     scale: 0.98,
     opacity: 0.85,
     y: -50 // Adicione esta linha para começar mais acima
+    x: -50
 });
 
 // Na sequência de animação
@@ -595,7 +596,7 @@ timeline
     .to(logo, {
         scale: 1.2, // Aumente para um valor maior que 1
         opacity: 1,
-        duration: 1.5,
+        duration: 2.5,
         ease: "sine.inOut"
     })
         // Animar traçados dos caminhos
@@ -608,7 +609,7 @@ timeline
         }, 0.5)
         // Glow durante o desenho
         .to(backgroundGlow, {
-            opacity: 0.6,
+            opacity: 0.3,
             duration: 2.5,
             ease: "sine.inOut"
         }, 1)
